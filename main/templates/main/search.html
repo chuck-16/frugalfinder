@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google" content="notranslate">
+    {% load static %}
+    <link href="{% static 'main/style.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  </head>
+  <body>
+    <div class="logo">
+        <a href="/"><h1>Frugal<font color="#e30909">Finder</font></h1></a>
+    </div>
+    <div class="searchbar-container">
+        <form action="" class="searchbar" autocomplete="off">
+            <input minlength="3" maxlength = "30" class="searchbar-input" type="text" placeholder="search..." name="q">
+            <button class="searchbar-button" type="submit"><i class="material-icons">search</i></button>
+        </form>
+    </div>  
+    <h1 class="results-for">results for "{{query}}"</h1>
+    <div class="dropdown-container">
+      <div class="dropdown">
+        <button class="dropbtn">Filter ↓</button>
+        <div class="dropdown-content">
+          <a href="/search/?q={{ query }}&s=bm">Best Match</a>
+          <a href="/search/?q={{ query }}&s=lth">Price: Low to High</a>
+          <a href="/search/?q={{ query }}&s=htl">Price: High to Low</a>
+        </div>
+      </div>
+      <div class="dropdown">
+        <button class="dropbtn">Condition ↓</button>
+        <div class="dropdown-content">
+          <a href="/search/?q={{ query }}&s={{ sort_method }}&c=n">New</a>
+          <a href="/search/?q={{ query }}&s={{ sort_method }}&c=n+u">New and Used</a>
+        </div>
+      </div>
+    </div>
+    <hr class="horizontal-divider">
+    <div class="products">
+      {% for product in products %}
+        <a href="{{ product.url }}" target="_blank">
+            <div class="product">
+              <img class="brand-icon" src="{{ product.brand_img }}">
+              <img class="product-img" src="{{ product.img_url }}">
+              <h1>${{ product.price }}</h1>
+              <p>{{ product.name }}</p>
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+  </body>
+</html>
